@@ -12,12 +12,31 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "b9ace8d5-f0a9-4f45-8394-dce00b6f131d",
 						"exec": [
 							"let jsonData = pm.response.json();",
-							"pm.environment.set('token', jsonData.id_token)"
+							"pm.environment.set('token', jsonData.id_token)",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status message is OK\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id_token\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							""
 						],
 						"type": "text/javascript",
-						"id": "b9ace8d5-f0a9-4f45-8394-dce00b6f131d"
+						"packages": {}
 					}
 				}
 			],
@@ -86,7 +105,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+					"raw": "{\r\n    \"username\": \"svetlanalya321\",\r\n    \"password\": \"SvetlanaLya321\",\r\n    \"rememberMe\": false\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/authenticate",
@@ -106,6 +125,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "810e545d-71c9-4f5a-83cd-156840a34420",
 						"exec": [
 							"let jsonData = pm.response.json();",
 							"",
@@ -116,10 +136,36 @@
 							"",
 							"pm.environment.set(\"task_id\", jsonData.id)",
 							"",
-							""
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Status message is Created\", function () {",
+							"    pm.response.to.have.status(\"Created\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"text\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"answer\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
 						],
 						"type": "text/javascript",
-						"id": "810e545d-71c9-4f5a-83cd-156840a34420"
+						"packages": {}
 					}
 				}
 			],
@@ -145,7 +191,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}"
+					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}\n\n"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/tasks",
@@ -161,6 +207,45 @@
 		},
 		{
 			"name": "get tasks list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "89b70986-1c74-4735-a896-ce62968d931f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status message is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"text\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"answer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "c9d10ffb-c353-4c56-92ef-d478885ba326",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -201,6 +286,45 @@
 		},
 		{
 			"name": "change task text",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d51ab3bf-07e7-4584-9ff5-8ab778eed488",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status message is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"text\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"answer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains expected text\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "cd6355aa-333a-4c5e-8d1b-92cb684745e9",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -244,6 +368,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "81c87894-d478-4e21-87ae-074fb3d39004",
 						"exec": [
 							"pm.sendRequest(",
 							"    {url: 'https://sqlverifier-50d286d70656.herokuapp.com/api/tasks/3070',",
@@ -255,10 +380,38 @@
 							"    , function (err, response) {",
 							"    console.log(response);",
 							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status message is OK\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"text\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"answer\");",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected text\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
 							""
 						],
 						"type": "text/javascript",
-						"id": "81c87894-d478-4e21-87ae-074fb3d39004"
+						"packages": {}
 					}
 				}
 			],
@@ -306,21 +459,21 @@
 		{
 			"listen": "prerequest",
 			"script": {
+				"id": "8f48e814-928c-4da2-8dee-05bb0aeb8036",
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "f10bde53-e9d8-4805-b6ad-2f57620cfc35"
+				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
+				"id": "745c38bf-af38-4917-aaba-31a05d0729bc",
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "35ed8a03-f081-4034-aaeb-ef652541f4a5"
+				]
 			}
 		}
 	]
